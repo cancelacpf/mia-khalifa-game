@@ -1,13 +1,109 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recomendador de Jogos</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+  <style>
+    .box {
+      width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      border: 2px solid #4c0073;
+      border-radius: 10px;
+      background-color: #f4f4f4;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+
+    h2 {
+      color: #4c0073;
+      font-size: 25px;
+    }
+
+    span, input, label {
+      font-size: 18px;
+      margin: 10px;
+      color: #333;
+    }
+
+    .input-container {
+      display: inline-block;
+    }
+
+    iframe {
+      margin-top: 20px;
+      border: 2px solid #4c0073;
+      border-radius: 10px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    button {
+      margin-left: 10px;
+    }
+  </style>
 </head>
 <body>
+  <div class="box">
+    <h2>Recomendador de Jogos</h2>
     
+    <div class="input-container">
+      <span>Sua idade:</span>
+      <input id="idadeInput" type="number" value="5" />
+      <button id="resetButton">Reset</button>
+    </div>
+
+    <!-- Iframe para exibir o jogo -->
+    <iframe id="gameIframe" width="485" height="402" allowtransparency="true" frameborder="0" scrolling="no" allowfullscreen></iframe>
+    <p id="statusMessage">Em construção</p>
+
+    <script>
+      const gameIframe = document.getElementById('gameIframe');
+      const idadeInput = document.getElementById('idadeInput');
+      const statusMessage = document.getElementById('statusMessage');
+      const resetButton = document.getElementById('resetButton');
+
+      // Mantém o iframe escondido inicialmente
+      gameIframe.classList.add('hidden');
+
+      // Função para exibir o jogo com base na idade
+      function geraRecomendacao(idade) {
+        if (idade == 14) {
+          gameIframe.src = "https://scratch.mit.edu/projects/1073615209/embed";
+          gameIframe.classList.remove('hidden');
+          statusMessage.textContent = "Bom jogo!";
+        } else if (idade == 16) {
+          gameIframe.src = "https://scratch.mit.edu/projects/712511942/embed";
+          gameIframe.classList.remove('hidden');
+          statusMessage.textContent = "Bom jogo!";
+        } else {
+          gameIframe.classList.add('hidden');
+          statusMessage.textContent = "Em construção";
+        }
+      }
+
+      // Detecta o pressionamento da tecla Enter no campo de idade
+      idadeInput.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+          geraRecomendacao(idadeInput.value);
+          idadeInput.disabled = true; // Bloqueia a edição após a escolha
+        }
+      });
+
+      // Botão de reset para liberar a troca de idade
+      resetButton.addEventListener('click', function() {
+        gameIframe.src = "";
+        statusMessage.textContent = "Em construção";
+        idadeInput.disabled = false; // Libera o campo para alteração
+      });
+    </script>
+  </div>
 </body>
 </html>
+
 
 
